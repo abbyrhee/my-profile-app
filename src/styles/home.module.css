@@ -13,11 +13,34 @@
     margin-bottom: 1.5rem;
     margin-top:3rem;
   }
+  .filter--select label,
+  .filter--search label {
+    margin-right: 0.5rem; /* Add margin to the label */
+  }
+  select,
+.filter--search input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #FFE5EC;
+  font-size: 1rem;
+  color: #333;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+select:focus,
+.filter--search input:focus {
+  border-color: #333;
+}
+select option {
+  padding: 0.5rem;
+}
   .filter--search,
   .filter--select,
   button {
     margin-right: 0.5rem;
     margin-bottom: 0.5rem;
+    color: #333;
   }
   select,
   input {
@@ -37,5 +60,6 @@
     }
     button{
       margin: 0.5rem;
+      color: #adb5bd
     }
   }

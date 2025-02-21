@@ -22,7 +22,11 @@
       transform: scale(0.9);
       animation: cardEnter 0.5s forwards; /* Apply the animation */  
     }
-  
+    
+    .card h2 {
+      font-weight: bold;
+    }
+    
     .profile-card__image {
       width: 100%;
       padding-top: 100%;

@@ -64,7 +64,7 @@ const HomePage = () => {
 
   return (
     <Wrapper>
-      <h1>Profile App</h1>
+      <h1>PROFILE APP</h1>
       <div className={styles["filter-wrapper"]}>
         <div className={styles["filter--select"]}>
           <label htmlFor="title-select">Select a title:</label>

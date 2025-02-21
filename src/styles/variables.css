@@ -2,17 +2,17 @@
 body{
     /* color scheme */
     --primary-background-color: #f7f7f7;
-    --secondary-backrgound-color: #646cff;
+    --secondary-backrgound-color: #FFC2D1;
     --third-background-color: #ffffff;
     --dark-background-color: #191a1a;
     --text-color: #191a1a;
     --dark-text-color: #ffffff;
-    --button-background-color: #1a1a1a;
+    --button-background-color: #FB6F92;
     --button-text-color: #ffffff;
     --button-hover-background-color: var(--primary-background-color);
     --button-hover-text-color: #191a1a;
     --button-border-color: #ccc;
-    --link-color: #646cff;
+    --link-color: #FFC2D1;
     --link-hover-color: var(--text-color);
     /* font */
     --font-family: 'Roboto', sans-serif;
