@@ -19,6 +19,7 @@ main {
     h4,
     h5,
     h6,
+    label,
     p {
       color: var(--dark-text-color);
     }
@@ -30,7 +31,8 @@ h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+label {
   color: var(--text-color);
   font-family: var(--font-family);
   margin-bottom: 0.625rem;
