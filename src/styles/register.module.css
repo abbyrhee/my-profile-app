@@ -1,0 +1,11 @@
+.login-link {
+    display: block;
+    text-align: center;
+    margin-top: 1rem;
+    color: var(--text-color);
+    text-decoration: underline;
+}
+
+.login-link:hover {
+    color: var(--link-hover-color);
+}

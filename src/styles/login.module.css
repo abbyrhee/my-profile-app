@@ -1,0 +1,11 @@
+.register-link {
+    display: block;
+    text-align: center;
+    margin-top: 1rem;
+    color: var(--text-color);
+    text-decoration: underline;
+}
+
+.register-link:hover {
+    color: var(--link-hover-color);
+}
