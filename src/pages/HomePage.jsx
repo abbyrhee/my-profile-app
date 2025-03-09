@@ -1,6 +1,6 @@
 import Card from "../components/Card";
 import Wrapper from "../components/Wrapper";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faXmark,
@@ -11,20 +11,23 @@ import styles from "../styles/home.module.css";
 import { Link } from "react-router-dom";
 import { useDebounce } from '../hooks/useDebounce';
 import ScrollToTop from "../components/ScrollToTop";
+import useHomePage from "../reducers/hooks/homePageHook";
 
 const HomePage = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const debouncedSearch = useDebounce(searchTerm, 500);
+  const { state, dispatch } = useHomePage();
+  const { titles, title, search, profiles, page, count } = state;
 
-  // This effect will only run 500ms after the user stops typing
-  useEffect(() => {
-    // Perform search with debouncedSearch value
-    fetch(`https://web.ics.purdue.edu/~rhee27/profile-app/fetch-data-with-filter.php?search=${debouncedSearch}`)
-      .then(response => response.json())
-      .then(data => {
-        // Handle search results
-      });
-  }, [debouncedSearch]);
+  const handleTitleChange = (e) => {
+    dispatch({ type: "SET_TITLE", payload: e.target.value });
+  };
+
+  const handleSearchChange = (e) => {
+    dispatch({ type: "SET_SEARCH", payload: e.target.value });
+  };
+
+  const handleClear = () => {
+    dispatch({ type: "CLEAR_FILTERS" });
+  };
 
   return (
     <Wrapper>
@@ -50,7 +53,7 @@ const HomePage = () => {
             value={search}
           />
         </div>
-        <button onClick={handleClear} style={buttonStyle}>
+        <button onClick={handleClear}>
           <span className="sr-only">Reset</span>
           <FontAwesomeIcon icon={faXmark} />
         </button>
