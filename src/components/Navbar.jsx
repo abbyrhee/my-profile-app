@@ -5,7 +5,7 @@ import { useContext } from "react";
 import AuthContext from "../contexts/AuthContext";
 
 const Navbar = () => {
-  const { mode, handleModeChange } = useContext(ModeContext);
+  const { mode, toggleDarkMode } = useContext(ModeContext);
   const { isLogin, logout } = useContext(AuthContext);
   return (
     <nav className={`${styles["navbar"]}`}>
@@ -27,7 +27,7 @@ const Navbar = () => {
           <li><Link to="/login">Login</Link></li>
           <li><Link to="/register">Register</Link></li></ul>
       }
-      <button onClick={handleModeChange}>
+      <button onClick={toggleDarkMode}>
         {mode === "light" ? "Dark Mode" : "Light Mode"}
       </button>
     </nav>

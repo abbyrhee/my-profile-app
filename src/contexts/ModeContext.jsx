@@ -1,19 +1,18 @@
-import { createContext, useState } from "react";
+import { createContext } from "react";
+import { useToggle } from "../hooks/useToggle";
 
 const ModeContext = createContext();
 
 export const ModeProvider = ({ children }) => {
-      //variable to store the mode state
-      const [mode, setMode] = useState("light");
-      //function to update the mode state
-      const handleModeChange = () => {
-        setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
-      };
+  const [isDarkMode, toggleDarkMode] = useToggle(false);
+  
+  const mode = isDarkMode ? "dark" : "light";
 
-      return (
-        <ModeContext.Provider value={{ mode, handleModeChange }}>
-          {children}
-        </ModeContext.Provider>
-      )
+  return (
+    <ModeContext.Provider value={{ mode, toggleDarkMode }}>
+      {children}
+    </ModeContext.Provider>
+  );
 };
+
 export default ModeContext;

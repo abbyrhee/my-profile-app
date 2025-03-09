@@ -1,78 +1,42 @@
 import Card from "../components/Card";
 import Wrapper from "../components/Wrapper";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faXmark,
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
-import { useEffect } from "react";
 import styles from "../styles/home.module.css";
 import { Link } from "react-router-dom";
+import { useDebounce } from '../hooks/useDebounce';
+import ScrollToTop from "../components/ScrollToTop";
 
 const HomePage = () => {
-  const [titles, setTitles] = useState([]);
-  const [title, setTitle] = useState("");
-  const [search, setSearch] = useState("");
-  const [profiles, setProfiles] = useState([]);
-  const [page, setPage] = useState(1);
-  const [count, setCount] = useState(1);
+  const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearch = useDebounce(searchTerm, 500);
 
-  // get titles
+  // This effect will only run 500ms after the user stops typing
   useEffect(() => {
-    fetch("https://web.ics.purdue.edu/~rhee27/profile-app/get-titles.php")
-      .then((res) => res.json())
-      .then((data) => {
-        setTitles(data.titles);
+    // Perform search with debouncedSearch value
+    fetch(`https://web.ics.purdue.edu/~rhee27/profile-app/fetch-data-with-filter.php?search=${debouncedSearch}`)
+      .then(response => response.json())
+      .then(data => {
+        // Handle search results
       });
-  }, []);
-
-  //update the title on change of the drowndrop
-  const handleTitleChange = (event) => {
-    setTitle(event.target.value);
-    setPage(1);
-  };
-
-  //update the search on change of the input
-  const handleSearchChange = (event) => {
-    setSearch(event.target.value);
-    setPage(1);
-  };
-  //fetch the data from the server
-  useEffect(() => {
-    fetch(
-      `https://web.ics.purdue.edu/~rhee27/profile-app/fetch-data-with-filter.php?title=${title}&name=${search}&page=${page}&limit=10`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setProfiles(data.profiles);
-        setCount(data.count);
-        setPage(data.page);
-      });
-  }, [title, search, page]);
-  //clear the title and search
-  const handleClear = () => {
-    setTitle("");
-    setSearch("");
-    setPage(1);
-  };
-
-  const buttonStyle = {
-    border: "1px solid #ccc",
-  };
+  }, [debouncedSearch]);
 
   return (
     <Wrapper>
-      <h1>PROFILE APP</h1>
+      <h1>Profile App</h1>
       <div className={styles["filter-wrapper"]}>
         <div className={styles["filter--select"]}>
           <label htmlFor="title-select">Select a title:</label>
           <select id="title-select" onChange={handleTitleChange} value={title}>
             <option value="">All</option>
-            {titles.map((title) => (
-              <option key={title} value={title}>
-                {title}
+            {Array.isArray(titles) && titles.map((titleOption) => (
+              <option key={titleOption} value={titleOption}>
+                {titleOption}
               </option>
             ))}
           </select>
@@ -92,16 +56,19 @@ const HomePage = () => {
         </button>
       </div>
       <div className={styles["profile-cards"]}>
-        {profiles.map((profile) => (
+        {Array.isArray(profiles) && profiles.map((profile) => (
           <Link to={`/profile/${profile.id}`} key={profile.id}>
-          <Card key={profile.id} {...profile} />
+            <Card {...profile} />
           </Link>
         ))}
       </div>
       {count === 0 && <p>No profiles found!</p>}
       {count > 10 && (
         <div className={styles["pagination"]}>
-          <button onClick={() => setPage(page - 1)} disabled={page === 1}>
+          <button
+            onClick={() => dispatch({ type: "SET_PAGE", payload: page - 1 })}
+            disabled={page === 1}
+          >
             <span className="sr-only">Previous</span>
             <FontAwesomeIcon icon={faChevronLeft} />
           </button>
@@ -109,7 +76,7 @@ const HomePage = () => {
             {page}/{Math.ceil(count / 10)}
           </span>
           <button
-            onClick={() => setPage(page + 1)}
+            onClick={() => dispatch({ type: "SET_PAGE", payload: page + 1 })}
             disabled={page >= Math.ceil(count / 10)}
           >
             <span className="sr-only">Next</span>
@@ -117,6 +84,7 @@ const HomePage = () => {
           </button>
         </div>
       )}
+      <ScrollToTop />
     </Wrapper>
   );
 };

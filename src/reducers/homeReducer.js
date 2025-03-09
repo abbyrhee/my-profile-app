@@ -1,5 +1,5 @@
 export const initialState = {
-    titles: "",
+    titles: [], // Changed from "" to [] to properly initialize titles array
     title: "",
     search: "",
     profiles: [],
@@ -12,7 +12,7 @@ export const homeReducer = (state, action) => {
         case "SET_TITLES":
             return {
                 ...state,
-                title: action.payload
+                titles: action.payload // Changed from title to titles
             };
         case "SET_TITLE":
             return {

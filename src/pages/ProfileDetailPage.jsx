@@ -8,6 +8,8 @@ import AuthContext from "../contexts/AuthContext";
 const ProfileDetailPage = () => {
   const [profile, setProfile] = useState({});
   const { id } = useParams();
+  const { isLogin } = useContext(AuthContext);
+
   useEffect(() => {
     fetch(
       `https://web.ics.purdue.edu/~rhee27/profile-app/fetch-data-with-id.php?id=${id}`

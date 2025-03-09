@@ -1,20 +1,23 @@
+
+import { useRef } from "react";
 import style from "../styles/card.module.css";
 import PropTypes from "prop-types";
 
 const Card = ({ image_url, name, title, email }) => {
+  const cardRef = useRef(null);
+
   return (
     <div
+      ref={cardRef}
       className={`${style["profile-card"]} ${style["is-entering"]}`}
     >
       <div className={style["profile-card__image"]}>
         <img src={image_url} alt={name} />
       </div>
       <div className={style["profile-card__content"]}>
-        <p>{name}</p>
-        <p>{title}</p>
-        {/* <p>
-          <a href={`mailto:${email}`}>{email}</a>
-        </p> */}
+        <p className={style["name"]}>{name}</p>
+        <p className={style["title"]}>{title}</p>
+        <p className={style["email"]}>{email}</p>
       </div>
     </div>
   );
@@ -23,6 +26,6 @@ Card.propTypes = {
   image_url: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   title: PropTypes.string,
-  email: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired
 };
 export default Card;

@@ -6,21 +6,14 @@ body {
   font-size: 1rem;
   margin: 0;
   padding: 0;
+  min-height: 100vh;
 }
 main {
-  height: 100%;
   min-height: 100vh;
   &.dark {
     background-color: var(--dark-background-color);
     color: var(--dark-text-color);
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    label,
-    p {
+    h1, h2, h3, h4, h5, h6, label, p {
       color: var(--dark-text-color);
     }
   }
@@ -95,6 +88,7 @@ li {
 .section {
   width: 100%;
   padding: 4rem;
+  min-height: 100vh; /* Ensure sections are at least full viewport height */
 }
 .section + .section {
   margin-top: -4rem;
@@ -102,6 +96,7 @@ li {
 .container {
   max-width: 1200px;
   margin: 0 auto;
+  min-height: 100vh; /* Ensure container has minimum height */
 }
 .sr-only {
   position: absolute;
