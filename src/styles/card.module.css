@@ -66,6 +66,12 @@
     overflow: hidden;
     text-overflow: ellipsis;
     padding: 0 0.5rem;
+    color: var(--text-color); /* This will change in dark mode */
+  }
+
+  /* Add this new rule to override the name color in dark mode */
+  :global(.dark) .profile-card__content .name {
+    color: #191a1a; /* Using your dark text color variable value directly */
   }
 
   .profile-card__content .title {

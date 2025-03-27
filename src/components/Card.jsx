@@ -2,8 +2,9 @@
 import { useRef } from "react";
 import style from "../styles/card.module.css";
 import PropTypes from "prop-types";
+import { memo } from "react";
 
-const Card = ({ image_url, name, title, email }) => {
+const Card = memo(({ image_url, name, title, email }) => {
   const cardRef = useRef(null);
 
   return (
@@ -21,7 +22,11 @@ const Card = ({ image_url, name, title, email }) => {
       </div>
     </div>
   );
-};
+});
+
+// Add display name for debugging purposes
+Card.displayName = 'Card';
+
 Card.propTypes = {
   image_url: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,

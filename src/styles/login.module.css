@@ -9,3 +9,11 @@
 .register-link:hover {
     color: var(--link-hover-color);
 }
+
+:global(.dark) .register-link {
+    color: var(--dark-text-color);
+}
+
+:global(.dark) .register-link:hover {
+    color: var(--link-hover-color);
+}

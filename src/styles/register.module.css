@@ -9,3 +9,11 @@
 .login-link:hover {
     color: var(--link-hover-color);
 }
+
+:global(.dark) .login-link {
+    color: var(--dark-text-color);
+}
+
+:global(.dark) .login-link:hover {
+    color: var(--link-hover-color);
+}
