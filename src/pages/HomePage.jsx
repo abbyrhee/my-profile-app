@@ -2,7 +2,8 @@ import React, { Suspense, useMemo, useCallback } from "react";
 import Wrapper from "../components/Wrapper";
 import LoadingSpinner from "../components/LoadingSpinner";
 import useHomePage from "../reducers/hooks/homePageHook";
-import styles from "../styles/home.module.css"; // Import the CSS module
+import Counter from "../components/Counter";
+import styles from "../styles/home.module.css";
 
 // Lazy load non-critical components
 const FiltersContainer = React.lazy(() => import("../components/filters/FiltersContainer"));
@@ -43,6 +44,8 @@ const HomePage = () => {
   return (
     <Wrapper>
       <h1>Profile App</h1>
+      
+      <Counter />
       
       <Suspense fallback={<LoadingSpinner />}>
         <div className={styles["profile-container"]}>

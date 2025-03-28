@@ -1,11 +1,12 @@
 import React, { Suspense, useContext } from "react";
 import { HashRouter, Routes, Route } from "react-router-dom";
-import ModeContext from "./contexts/ModeContext";
+import { useSelector } from 'react-redux';
+import { selectMode } from './features/mode/modeSlice';
 import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
 import LoadingSpinner from "./components/LoadingSpinner";
-import "./App.css"; // Make sure this is imported
+import "./App.css";
 
 // Lazy load pages
 const HomePage = React.lazy(() => import("./pages/HomePage"));
@@ -19,7 +20,7 @@ const RegisterPage = React.lazy(() => import("./pages/RegisterPage"));
 const NotFound = React.lazy(() => import("./pages/NotFound"));
 
 const App = () => {
-  const { mode } = useContext(ModeContext);
+  const mode = useSelector(selectMode);
 
   return (
     <AuthProvider>
