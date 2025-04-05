@@ -1,14 +1,15 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useSelector } from 'react-redux';
+import { selectAuth } from '../features/auth/authSlice';
 import Wrapper from "../components/Wrapper";
 import styles from "../styles/profiledetail.module.css";
 import { Link } from "react-router-dom";
-import AuthContext from "../contexts/AuthContext";
 
 const ProfileDetailPage = () => {
   const [profile, setProfile] = useState({});
   const { id } = useParams();
-  const { isLogin } = useContext(AuthContext);
+  const { isLogin } = useSelector(selectAuth);
 
   useEffect(() => {
     fetch(

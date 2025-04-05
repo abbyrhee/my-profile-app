@@ -1,9 +1,9 @@
-import { useContext } from "react";
-import AuthContext from "../contexts/AuthContext";
+import { useSelector } from 'react-redux';
+import { selectAuth } from '../features/auth/authSlice';
 import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({ children }) => {
-  const { isLogin } = useContext(AuthContext);
+  const { isLogin } = useSelector(selectAuth);
   return isLogin ? children : <Navigate to="/login" />;
 };
 

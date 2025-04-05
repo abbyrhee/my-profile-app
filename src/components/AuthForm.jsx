@@ -1,25 +1,27 @@
-import { useState, useEffect, useContext, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { login, selectAuth, clearError } from '../features/auth/authSlice';
 import style from "../styles/ProfileForm.module.css";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../contexts/AuthContext";
-import { use } from "react";
 
 const AuthForm = ({ isRegister = false }) => {
   const usernameRef = useRef(null);
-  const { login } = useContext(AuthContext);
+  const dispatch = useDispatch();
+  const { error, status } = useSelector(selectAuth);
   const [data, setData] = useState({
     username: "",
     password: "",
     email: "",
   });
-  const [error, setError] = useState("");
-  const [submitting, setSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
     usernameRef.current.focus();
-  }, []);
+    return () => {
+      dispatch(clearError());
+    };
+  }, [dispatch]);
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -27,7 +29,6 @@ const AuthForm = ({ isRegister = false }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitting(true);
     const formData = new FormData();
     formData.append("username", data.username.trim());
     formData.append("password", data.password.trim());
@@ -35,33 +36,16 @@ const AuthForm = ({ isRegister = false }) => {
     formData.append("action", isRegister ? "register" : "login");
 
     try {
-      const response = await fetch(
-        "https://web.ics.purdue.edu/~rhee27/profile-app/auth.php",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-      const data = await response.json();
-      if (data.success) {
-        setData({
-          username: "",
-          password: "",
-          email: "",
-        });
-        setSuccessMessage(data.success);
-        setError("");
-        login();
-        navigate("/");
-      } else {
-        setError(data.error);
-        setSuccessMessage("");
-      }
+      await dispatch(login(formData)).unwrap();
+      setData({
+        username: "",
+        password: "",
+        email: "",
+      });
+      setSuccessMessage("Successfully logged in!");
+      navigate("/");
     } catch (error) {
-      setError(error.message);
       setSuccessMessage("");
-    } finally {
-      setSubmitting(false);
     }
   };
 
@@ -98,7 +82,7 @@ const AuthForm = ({ isRegister = false }) => {
       <button
         type="submit"
         disabled={
-          submitting ||
+          status === 'loading' ||
           data.username.trim() === "" ||
           (isRegister && data.email.trim() === "") ||
           data.password.trim() === ""

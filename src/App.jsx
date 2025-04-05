@@ -1,8 +1,7 @@
-import React, { Suspense, useContext } from "react";
+import React, { Suspense } from "react";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import { selectMode } from './features/mode/modeSlice';
-import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
 import LoadingSpinner from "./components/LoadingSpinner";
@@ -23,43 +22,41 @@ const App = () => {
   const mode = useSelector(selectMode);
 
   return (
-    <AuthProvider>
-      <HashRouter>
-        <header>
-          <Navbar />
-        </header>
-        <main className={mode === "light" ? "light" : "dark"}>
-          <Suspense fallback={<LoadingSpinner />}>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/about" element={<AboutPage />} />
+    <HashRouter>
+      <header>
+        <Navbar />
+      </header>
+      <main className={mode === "light" ? "light" : "dark"}>
+        <Suspense fallback={<LoadingSpinner />}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route
+              path="/add-profile"
+              element={
+                <ProtectedRoute>
+                  <AddProfilePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/profile/:id" element={<ProfileIndexPage />}>
+              <Route index element={<ProfileDetailPage />} />
               <Route
-                path="/add-profile"
+                path="edit"
                 element={
                   <ProtectedRoute>
-                    <AddProfilePage />
+                    <ProfileEditPage />
                   </ProtectedRoute>
                 }
               />
-              <Route path="/profile/:id" element={<ProfileIndexPage />}>
-                <Route index element={<ProfileDetailPage />} />
-                <Route
-                  path="edit"
-                  element={
-                    <ProtectedRoute>
-                      <ProfileEditPage />
-                    </ProtectedRoute>
-                  }
-                />
-              </Route>
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/register" element={<RegisterPage />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
-        </main>
-      </HashRouter>
-    </AuthProvider>
+            </Route>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
+      </main>
+    </HashRouter>
   );
 };
 
