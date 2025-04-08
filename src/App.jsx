@@ -16,6 +16,7 @@ const ProfileDetailPage = React.lazy(() => import("./pages/ProfileDetailPage"));
 const ProfileEditPage = React.lazy(() => import("./pages/ProfileEditPage"));
 const LoginPage = React.lazy(() => import("./pages/LoginPage"));
 const RegisterPage = React.lazy(() => import("./pages/RegisterPage"));
+const ChatPage = React.lazy(() => import("./pages/ChatPage"));
 const NotFound = React.lazy(() => import("./pages/NotFound"));
 
 const App = () => {
@@ -52,6 +53,7 @@ const App = () => {
             </Route>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/chat" element={<ChatPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>

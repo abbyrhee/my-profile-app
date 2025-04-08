@@ -3,6 +3,7 @@ import Wrapper from "../components/Wrapper";
 import LoadingSpinner from "../components/LoadingSpinner";
 import useHomePage from "../reducers/hooks/homePageHook";
 import Counter from "../components/Counter";
+import ChatBot from "../components/ChatBot";
 import styles from "../styles/home.module.css";
 
 // Lazy load non-critical components
@@ -44,9 +45,9 @@ const HomePage = () => {
   return (
     <Wrapper>
       <h1>Profile App</h1>
-      
+
       <Counter />
-      
+
       <Suspense fallback={<LoadingSpinner />}>
         <div className={styles["profile-container"]}>
           <FiltersContainer
@@ -59,9 +60,9 @@ const HomePage = () => {
           />
 
           <ProfileList profiles={profiles} />
-          
+
           {count === 0 && <p>No profiles found!</p>}
-          
+
           {count > 10 && (
             <div className={styles.pagination}>
               <Pagination
@@ -76,6 +77,11 @@ const HomePage = () => {
           )}
 
           <ScrollToTop />
+        </div>
+
+        <div className={styles["chat-container"]}>
+          <h2>Need Help?</h2>
+          <ChatBot />
         </div>
       </Suspense>
     </Wrapper>

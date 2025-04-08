@@ -15,11 +15,12 @@ const Navbar = () => {
         <li><Link to="/">Home</Link></li>
         <li><Link to="/about">About</Link></li>
         <li><Link to="/add-profile">Add Profile</Link></li>
+        <li><Link to="/chat">Chat</Link></li>
       </ul>
       {
-        isLogin ? 
-        <button onClick={() => dispatch(logout())}>Logout</button> 
-        : 
+        isLogin ?
+        <button onClick={() => dispatch(logout())}>Logout</button>
+        :
         <ul>
           <li><Link to="/login">Login</Link></li>
           <li><Link to="/register">Register</Link></li>
